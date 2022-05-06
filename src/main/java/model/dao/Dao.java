@@ -92,7 +92,7 @@ public class Dao {
 	public boolean lisaaAsiakas(Asiakas asiakas) {
 		// TODO Auto-generated method stub
 		boolean paluuArvo = true;
-		sql = "INSERT INTO asiakkaat VALUES (?,?,?,?)";
+		sql = "INSERT INTO asiakkaat (etunimi, sukunimi, puhelin, sposti) VALUES (?,?,?,?)";
 		try {
 			con = yhdista();
 			stmtPrep = con.prepareStatement(sql);
@@ -101,6 +101,7 @@ public class Dao {
 			stmtPrep.setString(3, asiakas.getPuhelin());
 			stmtPrep.setString(4, asiakas.getSposti());
 			stmtPrep.executeUpdate();
+			System.out.println("Uusin id on " + stmtPrep.getGeneratedKeys().getInt(1));
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,7 +111,7 @@ public class Dao {
 	}
 	public Asiakas etsiAsiakas(int asiakas_id) {
 		Asiakas asiakas = null;
-		sql = "SELECT * FROM asiakkaat WHERE asikas_id=?";       
+		sql = "SELECT * FROM asiakkaat WHERE asiakas_id=?";       
 		try {
 			con=yhdista();
 			if(con!=null){ 
