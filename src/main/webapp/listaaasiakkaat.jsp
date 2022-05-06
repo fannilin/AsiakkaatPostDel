@@ -56,21 +56,22 @@ function haeTiedot(){
         	htmlStr+="<td>"+field.sukunimi+"</td>";
         	htmlStr+="<td>"+field.puhelin+"</td>";
         	htmlStr+="<td>"+field.sposti+"</td>";  
-        	htmlStr+="<td><span class='poista' onclick=poista('"+ field.asiakas_id+"')>"Poista"</span></td>";   
+        	htmlStr+="<td><a href='muutaAsiakas.jsp?asiakas_id=" + asiakas_id +"' >Muuta</a>&nbsp;";   
+        	htmlStr+="<span class='poista' onclick=poista("+ field.asiakas_id+", '"+field.etunimi+", '"+ field.sukunimi"'')>"Poista"</span></td>";   
         	htmlStr+="</tr>";
         	$("#listaus tbody").append(htmlStr);
         });
     }});	
 }
-	function poista(asiakas_id){
-	if(confirm("Poista asiakas " + etunimi +"?")){
+	function poista(asiakas_id, etunimi, sukunimi){
+	if(confirm("Poista asiakas " + etunimi + ""+ sukunimi + ""?")){
 		$.ajax({url:"asiakkaat/"+asiakas_id, type:"DELETE", dataType:"json", success:function(result) { //result on joko {"response:1"} tai {"response:0"}
 	        if(result.response==0){
 	        	$("#ilmo").html("Asiakkaan poisto epäonnistui.");
 	        }else if(result.response==1){
 	        	$("#rivi_"+asiakas_id).css("background-color", "orange"); 
-	        	alert("Asiakkaan " + asiakas_id +" poisto onnistui.");
-				haeAsiakkaat();        	
+	        	alert("Asiakkaan " + etunimi +"" + sukunimi +" poisto onnistui.");
+				haeTiedot();        	
 			}
 	    }});
 	}
